@@ -5,10 +5,13 @@ import java.util.Map;
 
 public class MarkovNameGenerator {
     Character TOTALCHAR = '%';
+    String[] names;
 
-    public MarkovNameGenerator() {}
+    public MarkovNameGenerator(String[] names) {
+        this.names = names;
+    }
 
-    private List<Character> extractUniqueCharacters(String[] names) {
+    private List<Character> extractUniqueCharacters() {
         List<Character> uniqueCharacters = new ArrayList<>();
         uniqueCharacters.add(' '); // Représente l'absence de char
         for (String name : names) {
@@ -23,9 +26,9 @@ public class MarkovNameGenerator {
         return uniqueCharacters;
     }
 
-    private HashMap<Character, HashMap<Character, Integer>> generateMatrixWithCount(String[] names) {
+    private HashMap<Character, HashMap<Character, Integer>> generateMatrixWithCount() {
         HashMap<Character, HashMap<Character, Integer>> matrix = new HashMap<>();
-        List<Character> keys = extractUniqueCharacters(names);
+        List<Character> keys = extractUniqueCharacters();
 
         for (Character key: keys) {
             // Initialiser une matrice avec les chars uniques de la banque de noms
@@ -49,8 +52,8 @@ public class MarkovNameGenerator {
         return matrix;
     }
     
-    public HashMap<Character, HashMap<Character, Interval>> generateMatrixWithInterval(String[] names) {
-        HashMap<Character, HashMap<Character, Integer>> origin = generateMatrixWithCount(names);
+    public HashMap<Character, HashMap<Character, Interval>> generateMatrixWithInterval() {
+        HashMap<Character, HashMap<Character, Integer>> origin = generateMatrixWithCount();
         HashMap<Character, HashMap<Character, Interval>> matrix = new HashMap<>();
 
         for (Map.Entry<Character, HashMap<Character, Integer>> fistEntry : origin.entrySet()) {

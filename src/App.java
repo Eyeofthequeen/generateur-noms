@@ -1,8 +1,8 @@
 public class App {
     public static void main(String[] args) throws Exception {
         String[] names = {"Simon", "Tim", "Emile", "Lin"};
-        MarkovNameGenerator nameGenerator = new MarkovNameGenerator();
+        MarkovNameGenerator nameGenerator = new MarkovNameGenerator(names);
 
-        var test = nameGenerator.generateMatrixWithInterval(names);
+        var test = nameGenerator.generateMatrixWithInterval();
     }
 }
