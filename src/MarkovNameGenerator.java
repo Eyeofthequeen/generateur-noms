@@ -6,9 +6,14 @@ import java.util.Map;
 public class MarkovNameGenerator {
     Character TOTALCHAR = '%';
     String[] names;
+    List<Character> headers;
+    HashMap<Character, HashMap<Character, Interval>> matrix;
+
 
     public MarkovNameGenerator(String[] names) {
         this.names = names;
+        this.headers = extractUniqueCharacters();
+        this.matrix = generateMatrixWithInterval();
     }
 
     private List<Character> extractUniqueCharacters() {
@@ -52,7 +57,7 @@ public class MarkovNameGenerator {
         return matrix;
     }
     
-    public HashMap<Character, HashMap<Character, Interval>> generateMatrixWithInterval() {
+    private HashMap<Character, HashMap<Character, Interval>> generateMatrixWithInterval() {
         HashMap<Character, HashMap<Character, Integer>> origin = generateMatrixWithCount();
         HashMap<Character, HashMap<Character, Interval>> matrix = new HashMap<>();
 
@@ -70,5 +75,40 @@ public class MarkovNameGenerator {
         }
 
         return matrix;
+    }
+
+    public void regenerateMatrix(String[] names) {
+        this.names = names;
+        matrix = generateMatrixWithInterval();
+    }
+
+    public void showMatrix() {
+        String formatChar = "%-12c|";
+        String formatString = "%-12s|";
+        HashMap<Character, HashMap<Character, Interval>> matrix = generateMatrixWithInterval();
+
+        var test = matrix.get(' ').keySet();
+        for (Character item : test) {
+            if (item.equals(' ')) {
+                System.out.format(formatChar, item);
+                System.out.format(formatString, "vide");
+                continue;
+            }
+            System.out.format(formatChar, item);
+        }
+        System.out.println("");
+
+        for (Map.Entry<Character, HashMap<Character, Interval>> firstEntry : matrix.entrySet()) {
+            var leftHeader = firstEntry.getKey().toString();
+            if (firstEntry.getKey().equals(' ')) {
+                leftHeader = "vide";
+            }
+            System.out.format(formatString, leftHeader);
+            
+            for (Map.Entry<Character, Interval> secondEntry : firstEntry.getValue().entrySet()) {
+                System.out.format(formatString, secondEntry.getValue().toString());
+            }
+            System.out.println("");
+        }
     }
 }

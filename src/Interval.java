@@ -3,7 +3,20 @@ public class Interval {
     Double min;
 
     public Interval(Double min, Double max) {
-        this.min = min; // include
-        this.max = max; // exclude
+        if (min.equals(max)) {
+            this.min = 0.0;
+            this.max = 0.0;
+        } else {
+            this.min = min; // include
+            this.max = max; // exclude
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (max > 0) {
+            return "[" + Math.round(min * 100.0) / 100.0 + "; " + Math.round(max * 100.0) / 100.0 + "]";
+        }
+        return " - ";
     }
 }
