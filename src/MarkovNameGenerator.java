@@ -2,12 +2,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class MarkovNameGenerator {
-    Character TOTALCHAR = '%';
-    String[] names;
-    List<Character> headers;
-    HashMap<Character, HashMap<Character, Interval>> matrix;
+    private Character TOTALCHAR = '%';
+    private String[] names;
+    private List<Character> headers;
+    private HashMap<Character, HashMap<Character, Interval>> matrix;
 
 
     public MarkovNameGenerator(String[] names) {
@@ -110,5 +111,31 @@ public class MarkovNameGenerator {
             }
             System.out.println("");
         }
+    }
+    
+    public String generateRandomName() {
+    	String randomName = "";
+        Random random = new Random();
+        char current = ' ';
+        boolean endOfName = false;
+        
+        while (!endOfName) {
+            HashMap<Character, Interval> possibleNext = matrix.get(current);
+            double index = 0.0 + (1.0 - 0.0) * random.nextDouble();
+            for (Map.Entry<Character, Interval> entry : possibleNext.entrySet()) {
+                char next = entry.getKey();
+                Interval interval = entry.getValue();
+                if (index >= interval.getMin() && index < interval.getMax()) {
+                	if (next == ' ') {
+                		endOfName = true;
+                		break;
+                	}
+                    current = next;
+                    randomName += current;
+                    break;
+                }
+            }
+        }
+        return randomName;
     }
 }

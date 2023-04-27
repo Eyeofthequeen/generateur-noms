@@ -1,6 +1,6 @@
 public class Interval {
-    Double max;
-    Double min;
+    private Double max;
+    private Double min;
 
     public Interval(Double min, Double max) {
         if (min.equals(max)) {
@@ -12,7 +12,15 @@ public class Interval {
         }
     }
 
-    @Override
+    public Double getMax() {
+		return max;
+	}
+
+	public Double getMin() {
+		return min;
+	}
+
+	@Override
     public String toString() {
         if (max > 0) {
             return "[" + Math.round(min * 100.0) / 100.0 + "; " + Math.round(max * 100.0) / 100.0 + "]";

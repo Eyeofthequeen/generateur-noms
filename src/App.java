@@ -9,5 +9,10 @@ public class App {
         //        | s
         // vide   | [0, 0.1]            Ici on a un vide suivi de s
         nameGenerator.showMatrix();
+        
+        for (int i = 0; i < 20; i++) {
+            String name = nameGenerator.generateRandomName();
+            System.out.println(name);
+        }
     }
 }
