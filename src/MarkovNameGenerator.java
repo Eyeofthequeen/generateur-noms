@@ -6,14 +6,12 @@ import java.util.Random;
 
 public class MarkovNameGenerator {
     private Character TOTALCHAR = '%';
-    private String[] names;
-    private List<Character> headers;
+    private ArrayList<String> names;
     private HashMap<Character, HashMap<Character, Interval>> matrix;
 
 
-    public MarkovNameGenerator(String[] names) {
+    public MarkovNameGenerator(ArrayList<String> names) {
         this.names = names;
-        this.headers = extractUniqueCharacters();
         this.matrix = generateMatrixWithInterval();
     }
 
@@ -78,7 +76,7 @@ public class MarkovNameGenerator {
         return matrix;
     }
 
-    public void regenerateMatrix(String[] names) {
+    public void regenerateMatrix(ArrayList<String> names) {
         this.names = names;
         matrix = generateMatrixWithInterval();
     }
